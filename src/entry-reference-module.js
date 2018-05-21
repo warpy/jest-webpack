@@ -44,12 +44,12 @@ class EntryReferenceModule extends Module {
       if (dep.request.indexOf('!') === -1 && dep.request.indexOf('?') === -1) {
         if (refKeys.default) {return;}
         refKeys.default = true;
-        references.push(`  default: function() {return __webpack_require__(${dep.module.id});}`);
+        references.push(`  default: function() {return __webpack_require__(${JSON.stringify(dep.module.id)});}`);
       }
       else {
         if (refKeys[hash(dep.request)]) {return;}
         refKeys[hash(dep.request)] = true;
-        references.push(`  ${JSON.stringify(hash(dep.request))}: function() {return __webpack_require__(${dep.module.id});}`);
+        references.push(`  ${JSON.stringify(hash(dep.request))}: function() {return __webpack_require__(${JSON.stringify(dep.module.id)});}`);
       }
     });
     let rawSource = `module.exports = {\n${references.join(',\n')}\n};\n`;
